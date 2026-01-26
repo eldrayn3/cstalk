@@ -1,0 +1,117 @@
+### Basic Types
+x = 10              # int
+y = 3.14            # float
+name = "Alice"      # str
+fact = True         # bool
+value = None        # no value assigned
+
+### Casting - Convert a variable from one data type to
+age = input("Enter Age: ")
+age = int(age)
+
+### f-string
+f"Name: {name}, Score: {y:.2f}"
+
+### Unpacking
+scores = [100, 95, 88, 70, 60]
+first, second, *rest = scores       # first = 100, second = 95, rest = [88, 70, 60]
+
+### List
+list = []                   #initialize
+list.append("x")            #add item to list
+list.insert(3, "y")         #add item to specified position
+list.remove(x)              #remove the first item whose value is x
+list.pop([i])               #remove item from specified position (i)
+list.clear()                #remove all items from list
+list.count(x)               #return the number of times x appears in the list
+list.sort(reverse=False)    #sort a list lowest value to highest, and reverse if necessary
+listsort = sorted(list)     #same as above
+
+for l in list:
+    print(item)
+
+### Dictionary
+user = {"name": "Bob", "age": 30}   #initialize
+user["name"]                        #access element
+user.get("email", "N/A")            #access element (returns none/input instead of keyError)
+for k, v in user.items():
+    print(k, v)
+
+### Tuple
+data = ("Pen", 1.5, 10)             #tuples are immutable
+data.count(x)                       #returns the number of times value occurs in tuple
+data.index(x)                       #returns index of the first time value occurs
+print (data[0])
+
+### Loop
+for i in range(5):
+    if i == 3:
+        break
+    elif i == 5:
+        break
+    else:
+        pass
+for char in "Hello":
+    print(char)
+
+### Function
+def add(a, b):
+    return a + b
+def get_point():        # Multiple return
+    return 3, 4
+x, y = get_point()      #usage
+
+### Class
+class Person:
+    def __init__(self, name, age):       #constructor automatically called when creating
+        self.name = name
+        self.age = age
+    def __str__(self):                   #alter what is printed when self is called
+        return f"{self.name}, {self.age}"
+
+personna = Person("max", 23)             #Usage
+
+### Class Methods
+@classmethod
+def from_birth_year(cls, name, birth_year):
+    """Alternative constructor using birth year."""
+    age = date.today().year - birth_year
+    return cls(name, age) # Returns an instance of the class (cls)
+@classmethod
+def display_total_people(cls):
+    """Class method to display a class variable."""
+    print(f"Total people created: {cls.total_people}")
+def display(self):
+    """Instance method to display instance attributes."""
+    print(f"{self.name} is {self.age} years old")
+
+### Inheritance
+class Student(Person):
+    def __init__(self, name, age):
+        super().__init__(name)              #pass name to the Person constructor
+        self.age = age                  #set new 'age' attribute
+
+### File I/O
+with open("file.txt", "r") as f:
+    lines = f.readlines()
+    for line in f:
+        cleaned_line = line.strip()                 #removes whitespace and newline
+        split_line = cleaned_line.split(',')        #divides string into a list
+        split_data.append(split_line)
+
+with open("file.txt", "w") as f:                    #overwrite the file
+    f.write("Hello")
+
+with open("file.txt", "a") as f:                    #adds to the existing data
+    f.write("Hello")
+
+### Error Handling
+try:
+    with open("data/logs.txt", "a") as file:
+        user_input = "100"  # Example data
+        value = int(user_input)
+        file.write(f"Value: {value}\n")
+except FileNotFoundError:
+    print("Error: The specified directory does not exist.")
+except ValueError:
+    print("Error: Could not convert data to an integer.")
