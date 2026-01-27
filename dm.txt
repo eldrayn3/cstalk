@@ -1,117 +1,51 @@
-### Basic Types
-x = 10              # int
-y = 3.14            # float
-name = "Alice"      # str
-fact = True         # bool
-value = None        # no value assigned
+რისკის ტიპები 2 (2 ქულა)
+პროგრამული უზრუნველყოფის პროექტებში ერთ-ერთი ძირითადი რისკია ტექნიკური რისკი, რომელიც ჩნდება მაშინ, როცა არჩეული ტექნოლოგია ან არქიტექტურა არ ამართლებს მოლოდინებს, მაგალითად ახალი, დაუტესტავი ფრეიმვორკის გამოყენება, რაც იწვევს შესრულების პრობლემებს. ასეთი რისკის განეიტრალების გზა არის პროტოტიპის შექმნა და ტექნოლოგიის ადრეული ტესტირება.
+ორგანიზაციული რისკი დაკავშირებულია მენეჯმენტთან ან სტრუქტურასთან, მაგალითად როცა მოთხოვნები ხშირად იცვლება ბიზნესის მხრიდან. ამ რისკის შემცირება შესაძლებელია ცვლილებების მართვის ფორმალური პროცესის დანერგვით.
+ადამიანური რისკი უკავშირდება გუნდს, მაგალითად კრიტიკული დეველოპერის დატოვება პროექტის შუა ეტაპზე. გამოსავალია ცოდნის დოკუმენტირება და ცოდნის გაზიარება გუნდში.
 
-### Casting - Convert a variable from one data type to
-age = input("Enter Age: ")
-age = int(age)
+პროექტის მენეჯერები (2 ქულა)
+პროგრამული უზრუნველყოფა არამატერიალურია, რაც ნიშნავს, რომ მისი პროგრესი ფიზიკურად თვალსაჩინო არ არის, განსხვავებით სხვა საინჟინრო სფეროებისგან, როგორიცაა მშენებლობა. ამიტომ პროექტის მენეჯერები ვერ აკონტროლებენ პროგრესს ვიზუალური ნიშნებით და იყენებენ არაპირდაპირ ინდიკატორებს, როგორიცაა დასრულებული ფუნქციონალი, ტესტების შედეგები, milestone-ები და დოკუმენტაცია. ეს ზრდის არასწორი შეფასების რისკს და მოითხოვს უფრო ხშირ მონიტორინგსა და კომუნიკაციას.
 
-### f-string
-f"Name: {name}, Score: {y:.2f}"
+Software aging (2 ქულა)
+პროგრამული უზრუნველყოფის დაძველება დროთა განმავლობაში იწვევს ტექნიკური ხარჯების ზრდას, რადგან სისტემა ხდება უფრო რთული გასაგები, ტექნოლოგიები მოძველებულია, დოკუმენტაცია არასრულია და ცვლილებების განხორციელება უფრო მეტ დროსა და რესურსს მოითხოვს. მცირე ცვლილებებიც კი შეიძლება გამოიწვიოს გაუთვალისწინებელი შეცდომები, რაც ზრდის მოვლის ღირებულებას.
 
-### Unpacking
-scores = [100, 95, 88, 70, 60]
-first, second, *rest = scores       # first = 100, second = 95, rest = [88, 70, 60]
+Emergency system repair (2 ქულა)
+გადაუდებელი შეკეთება სარისკოა, რადგან იგი ხშირად ხორციელდება დროის ზეწოლის ქვეშ, სათანადო ანალიზისა და ტესტირების გარეშე. ასეთ ცვლილებებს შეუძლია დააზიანოს სისტემის არქიტექტურა, გაზარდოს ტექნიკური ვალი და მომავალში გაართულოს შენარჩუნება, რაც უარყოფითად მოქმედებს გრძელვადიან ხარისხზე.
 
-### List
-list = []                   #initialize
-list.append("x")            #add item to list
-list.insert(3, "y")         #add item to specified position
-list.remove(x)              #remove the first item whose value is x
-list.pop([i])               #remove item from specified position (i)
-list.clear()                #remove all items from list
-list.count(x)               #return the number of times x appears in the list
-list.sort(reverse=False)    #sort a list lowest value to highest, and reverse if necessary
-listsort = sorted(list)     #same as above
+რისკის ტიპები 1 (2 ქულა)
+პროექტის რისკი ეხება გრაფიკსა და რესურსებს, მაგალითად არასაკმარისი დროის შეფასება. მისი შემცირება შესაძლებელია რეალისტური დაგეგმვით.
+პროდუქტის რისკი დაკავშირებულია პროგრამის ხარისხთან, მაგალითად დაბალი შესრულება. გამოსავალია ადრეული ტესტირება და ხარისხის კონტროლი.
+ბიზნეს რისკი ეხება ორგანიზაციას, მაგალითად პროდუქტის ბაზარზე ჩავარდნა. მისი შემცირება შესაძლებელია ბაზრის ანალიზით და მომხმარებლის ჩართულობით.
 
-for l in list:
-    print(item)
+გუნდი, teamwork (2 ქულა)
+არაფორმალური ჯგუფის სტრუქტურა უფრო ეფექტურია მაშინ, როცა პროექტი მცირეა, ინოვაციური და მოითხოვს სწრაფ გადაწყვეტილებებს. ასეთ გარემოში კომუნიკაცია უფრო თავისუფალია, ბიუროკრატია ნაკლებია და გუნდი სწრაფად რეაგირებს ცვლილებებზე, რაც იერარქიულ სტრუქტურაში რთულია.
 
-### Dictionary
-user = {"name": "Bob", "age": 30}   #initialize
-user["name"]                        #access element
-user.get("email", "N/A")            #access element (returns none/input instead of keyError)
-for k, v in user.items():
-    print(k, v)
+Legacy systems (2 ქულა)
+ძველი სისტემები ხშირად ინახება იმიტომ, რომ ისინი კრიტიკულია ბიზნესისთვის, მათი ჩანაცვლება სარისკო და ძვირია, ხოლო ახალი სისტემის დანერგვამ შეიძლება დროებით დააზიანოს ოპერაციები. ამიტომ ორგანიზაციები ირჩევენ მაღალ ტექნიკურ ხარჯებს დაბალი ბიზნეს რისკის სანაცვლოდ.
 
-### Tuple
-data = ("Pen", 1.5, 10)             #tuples are immutable
-data.count(x)                       #returns the number of times value occurs in tuple
-data.index(x)                       #returns index of the first time value occurs
-print (data[0])
+ალფა და ბეტა ტესტირება (2 ქულა)
+ალფა ტესტირება ტარდება დეველოპერების ან შიდა ტესტირების გუნდის მიერ კონტროლირებად გარემოში და მიზნად ისახავს ძირითადი დეფექტების აღმოჩენას. ბეტა ტესტირება ტარდება რეალურ მომხმარებლებთან, რეალურ გარემოში, რათა შეფასდეს სისტემის ქცევა პრაქტიკაში და მომხმარებლის გამოცდილება.
 
-### Loop
-for i in range(5):
-    if i == 3:
-        break
-    elif i == 5:
-        break
-    else:
-        pass
-for char in "Hello":
-    print(char)
+Validation, defect testing (2 ქულა)
+ვალიდაცია ამოწმებს, აკმაყოფილებს თუ არა სისტემა მომხმარებლის საჭიროებებს, ხოლო დეფექტების ტესტირება ფოკუსირებულია შეცდომების აღმოჩენაზე. ორივე მნიშვნელოვანია, რადგან სისტემა შეიძლება იყოს შეცდომებისგან თავისუფალი, მაგრამ მაინც არ აკმაყოფილებდეს მომხმარებლის მოთხოვნებს.
 
-### Function
-def add(a, b):
-    return a + b
-def get_point():        # Multiple return
-    return 3, 4
-x, y = get_point()      #usage
+User testing (2 ქულა)
+მომხმარებლის ტესტირება კრიტიკულია, რადგან რეალური მომხმარებლები ხშირად იყენებენ სისტემას არაპროგნოზირებადი გზებით. მათ შეუძლიათ გამოავლინონ გამოყენებადობის პრობლემები და ბიზნეს ლოგიკის ხარვეზები, რომლებიც ტექნიკური ტესტირებისას შეუმჩნეველი დარჩა.
 
-### Class
-class Person:
-    def __init__(self, name, age):       #constructor automatically called when creating
-        self.name = name
-        self.age = age
-    def __str__(self):                   #alter what is printed when self is called
-        return f"{self.name}, {self.age}"
+Test-Driven Development (2 ქულა)
+TDD არის მიდგომა, სადაც ჯერ იწერება ტესტი და შემდეგ კოდი. მისი უპირატესობებია უკეთესი დიზაინი, შეცდომების ადრეული აღმოჩენა და მაღალი ტესტირებადობა, რაც ამცირებს რეგრესიის რისკს.
 
-personna = Person("max", 23)             #Usage
+Verification vs Validation (2 ქულა)
+ვერიფიკაცია ამოწმებს, სწორად არის თუ არა სისტემა აგებული სპეციფიკაციის მიხედვით, ხოლო ვალიდაცია ამოწმებს, სწორია თუ არა სისტემა მომხმარებლისთვის. განსხვავება მდგომარეობს „როგორ ვაშენებთ“ და „რას ვაშენებთ“ კითხვებში.
 
-### Class Methods
-@classmethod
-def from_birth_year(cls, name, birth_year):
-    """Alternative constructor using birth year."""
-    age = date.today().year - birth_year
-    return cls(name, age) # Returns an instance of the class (cls)
-@classmethod
-def display_total_people(cls):
-    """Class method to display a class variable."""
-    print(f"Total people created: {cls.total_people}")
-def display(self):
-    """Instance method to display instance attributes."""
-    print(f"{self.name} is {self.age} years old")
+Regression testing (2 ქულა)
+რეგრესიის ტესტირება გამოიყენება ცვლილებების შემდეგ, რათა დავრწმუნდეთ, რომ ახალი ცვლილებები არ აზიანებს უკვე არსებულ ფუნქციონალს. ის აუცილებელია სისტემის ევოლუციის დროს.
 
-### Inheritance
-class Student(Person):
-    def __init__(self, name, age):
-        super().__init__(name)              #pass name to the Person constructor
-        self.age = age                  #set new 'age' attribute
+Automated testing (2 ქულა)
+ავტომატური ტესტირება ზრდის სიჩქარეს და სიზუსტეს, განსაკუთრებით რეგრესიის ტესტირებაში, თუმცა მისი შექმნა ძვირია და არ არის ეფექტური ყველა ტიპის ტესტისთვის, მაგალითად გამოყენებადობისთვის.
 
-### File I/O
-with open("file.txt", "r") as f:
-    lines = f.readlines()
-    for line in f:
-        cleaned_line = line.strip()                 #removes whitespace and newline
-        split_line = cleaned_line.split(',')        #divides string into a list
-        split_data.append(split_line)
+Open-Source Development
+ღია კოდის განვითარება ნიშნავს, რომ პროგრამის წყაროს კოდი ხელმისაწვდომია ყველასთვის. მისი უპირატესობებია დაბალი ღირებულება, გამჭვირვალობა, სწრაფი გაუმჯობესება და ფართო საზოგადოებრივი მხარდაჭერა.
 
-with open("file.txt", "w") as f:                    #overwrite the file
-    f.write("Hello")
-
-with open("file.txt", "a") as f:                    #adds to the existing data
-    f.write("Hello")
-
-### Error Handling
-try:
-    with open("data/logs.txt", "a") as file:
-        user_input = "100"  # Example data
-        value = int(user_input)
-        file.write(f"Value: {value}\n")
-except FileNotFoundError:
-    print("Error: The specified directory does not exist.")
-except ValueError:
-    print("Error: Could not convert data to an integer.")
+Software reuse, 4 levels of software reuse (2 ქულა)
+პროგრამული უზრუნველყოფის ხელახალი გამოყენება არის უკვე არსებული ელემენტების გამოყენება ახალი სისტემების შესაქმნელად. ხელახალი გამოყენების დონეებია: კოდის დონე, კომპონენტის დონე, სერვისის დონე და მთელი სისტემის დონე.
