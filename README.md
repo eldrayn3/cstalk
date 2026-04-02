@@ -1,105 +1,239 @@
-არქიტექტურული დიზაინი
-არქიტექტურული დიზაინი არის სისტემის მაღალი დონის სტრუქტურის განსაზღვრა: როგორია კომპონენტები, როგორ ურთიერთობენ და რა პასუხისმგებლობა აქვს თითოეულს.
-Architecture in the small ეხება ერთ კონკრეტულ კომპონენტს ან მოდულს შიგნით სტრუქტურას.
-Architecture in the big აღწერს მთელ სისტემას, მის ქვესისტემებს და მათ ურთიერთობებს.
+1.
 
-4+1 ხედვის მოდელი
-ეს მოდელი აღწერს სისტემას ხუთი ხედით: ლოგიკური (ფუნქციონალური სტრუქტურა), პროცესების (კონკურენტულობა და შესრულება), განვითარების (კოდისა და მოდულების ორგანიზაცია), ფიზიკური (განლაგება ჰარდვერზე) და +1 სცენარების ხედით, რომელიც აერთიანებს დანარჩენებს რეალური გამოყენების მაგალითებით.
+using System;
 
-არქიტექტურული ნიმუშები
-არქიტექტურული ნიმუშები არის გამოცდილი გადაწყვეტები ხშირი არქიტექტურული პრობლემებისთვის. ისინი ამცირებენ რისკს და აუმჯობესებენ ხარისხს, რადგან უკვე პრაქტიკაში შემოწმებულია.
+class Program
+{
+    static void Main()
+    {
+        int score = 85;
 
-Model-View-Controller (MVC)
-MVC ყოფს სისტემას სამ ნაწილად: Model ინახავს ლოგიკასა და მონაცემებს, View პასუხობს მონაცემების ჩვენებაზე, Controller კი მომხმარებლის ქმედებებს ამუშავებს. ეს ზრდის შენარჩუნებადობას და ტესტირებადობას.
+        if (score >= 90)
+        {
+            Console.WriteLine("Excellent");
+        }
+        else if (score >= 70)
+        {
+            Console.WriteLine("Good");
+        }
+        else
+        {
+            Console.WriteLine("Needs Improvement");
+        }
+    }
+}
 
-არქიტექტურული გადაწყვეტილებების გავლენა სისტემის მახასიათებლებზე
-არქიტექტურა პირდაპირ მოქმედებს შესრულებაზე, უსაფრთხოებაზე, მასშტაბირებადობაზე და შენარჩუნებადობაზე. მაგალითად, ფენოვანი არქიტექტურა აუმჯობესებს შენარჩუნებადობას, მაგრამ შეიძლება შეამციროს შესრულება.
+2.
 
-Layered, Repository, Client-Server, Pipe and Filter არქიტექტურები
-Layered არქიტექტურა სისტემას ყოფს ფენებად პასუხისმგებლობის მიხედვით.
-Repository არქიტექტურაში ყველა კომპონენტი იყენებს ცენტრალურ მონაცემთა საცავს.
-Client-Server ყოფს კლიენტს (ინტერფეისი) და სერვერს (ლოგიკა და მონაცემები).
-Pipe and Filter ამუშავებს მონაცემებს ეტაპობრივად, ფილტრების ჯაჭვის მეშვეობით.
+using System;
 
-ხელახალი გამოყენება
-ხელახალი გამოყენება ნიშნავს უკვე არსებული კომპონენტების გამოყენებას ახალ სისტემებში. არსებობს კოდის, კომპონენტის, სერვისის და სისტემის დონეზე ხელახალი გამოყენება.
+class BankAccount
+{
+    private double balance;
+    public string OwnerName { get; set; }
 
-პატერნები
-პატერნი არის განმეორებადი პრობლემის ზოგადი გადაწყვეტა კონკრეტულ კონტექსტში. ისინი გამოიყენება დიზაინის გასამარტივებლად და საერთო ენის შესაქმნელად დეველოპერებს შორის.
+    public BankAccount(string ownerName, double initialBalance)
+    {
+        OwnerName = ownerName;
+        balance = initialBalance;
+    }
 
-COTS (Commercial Off-The-Shelf)
-ეს არის მზა კომერციული პროგრამული პროდუქტები, რომლებიც გამოიყენება საკუთარი სისტემის შესაქმნელად მინიმალური მოდიფიკაციით.
+    public void Deposit(double amount)
+    {
+        balance += amount;
+    }
 
-კონფიგურაციის მართვა
-კონფიგურაციის მართვა უზრუნველყოფს კოდის, დოკუმენტაციის და ვერსიების კონტროლს ცვლილებების დროს, რათა სისტემა იყოს სტაბილური და კონტროლირებადი.
+    public void Withdraw(double amount)
+    {
+        if (amount <= balance)
+        {
+            balance -= amount;
+        }
+        else
+        {
+            Console.WriteLine("Not enough balance!");
+        }
+    }
 
-ღია კოდის განვითარება
-ღია კოდის მოდელში კოდი ხელმისაწვდომია ყველასთვის. განვითარება ხდება კოლაბორაციულად, რაც ზრდის გამჭვირვალობას და ინოვაციას.
+    public double GetBalance()
+    {
+        return balance;
+    }
+}
 
-ლიცენზირების მოდელები
-ლიცენზია განსაზღვრავს, როგორ შეიძლება პროგრამის გამოყენება, შეცვლა და გავრცელება. არსებობს კომერციული, ღია კოდის (GPL, MIT და სხვა) და ჰიბრიდული ლიცენზიები.
+class Program
+{
+    static void Main()
+    {
+        BankAccount acc = new BankAccount("Giorgi", 1000);
 
-Validation vs Defect Testing
-Validation ამოწმებს, ვაკეთებთ თუ არა სწორ პროდუქტს მომხმარებლის მოთხოვნების მიხედვით.
-Defect Testing მიზნად ისახავს შეცდომების აღმოჩენას სისტემაში.
+        acc.Deposit(500);
+        acc.Withdraw(300);
 
-Verification vs Validation
-Verification პასუხობს კითხვას: სწორად ვაშენებთ სისტემას სპეციფიკაციის მიხედვით?
-Validation პასუხობს: სწორ სისტემას ვაშენებთ მომხმარებლისთვის?
+        Console.WriteLine("Final Balance: " + acc.GetBalance());
+    }
+}
 
-ტესტირების მეთოდები
-არსებობს ერთეულური, ინტეგრაციის, სისტემური და მიღების ტესტირება, ასევე შავი ყუთის და თეთრი ყუთის მიდგომები.
 
-Test-Driven Development (TDD)
-TDD-ში ჯერ იწერება ტესტი, შემდეგ კოდი, რომელიც ამ ტესტს გაატარებს. ეს აუმჯობესებს კოდის ხარისხს და დიზაინს.
+3.
 
-Software Evolution
-პროგრამული უზრუნველყოფა დროთა განმავლობაში იცვლება მოთხოვნების, გარემოს და ტექნოლოგიების გამო. ევოლუცია გარდაუვალია.
+using System;
 
-Change Processes
-ცვლილებები იწყება იდენტიფიკაციით, შემდეგ მოდის იმპლემენტაცია. გადაუდებელი ცვლილებები საჭიროებს სწრაფ რეაგირებას მინიმალური რისკით.
+class Employee
+{
+    protected double salary;
 
-მოქნილი მეთოდები ევოლუციის დროს
-Agile მიდგომები ევოლუციას ამარტივებს ხშირი რელიზებით და უკუკავშირის სწრაფი მიღებით.
+    public Employee(double salary)
+    {
+        this.salary = salary;
+    }
 
-მოძველებული სისტემები
-მოძველებული სისტემა არის კრიტიკული, მაგრამ ძველი ტექნოლოგიით აშენებული სისტემა. გამოწვევებია შენარჩუნება და ცვლილება. სტრატეგიებია ჩანაცვლება, რეინჟინერია ან შენარჩუნება.
+    public virtual double CalculateBonus()
+    {
+        return salary * 0.1;
+    }
+}
 
-Business value and quality assessment
-ეს აფასებს, რამდენად მნიშვნელოვანია სისტემა ბიზნესისთვის და რამდენად ხარისხიანად მუშაობს.
+class Manager : Employee
+{
+    public Manager(double salary) : base(salary) { }
 
-Software Maintenance
-მოვლა მოიცავს შეცდომების გასწორებას, გარემოსთან ადაპტაციას და ახალი ფუნქციონალის დამატებას. მოვლა ყველაზე ძვირადღირებული ფაზაა და საჭიროებს პროგნოზირებას.
+    public override double CalculateBonus()
+    {
+        return salary * 0.2;
+    }
+}
 
-რეინჟინერია და რეფაქტორირება
-რეინჟინერია სისტემის სიღრმისეულ გარდაქმნას ნიშნავს. რეფაქტორირება კოდის გაუმჯობესებაა ფუნქციონალის შეცვლის გარეშე.
+class Developer : Employee
+{
+    public Developer(double salary) : base(salary) { }
 
-პროექტების მართვა
-პროექტის მართვა მოიცავს დაგეგმვას, კონტროლს და გუნდის კოორდინაციას მიზნების მისაღწევად.
+    public override double CalculateBonus()
+    {
+        return salary * 0.15;
+    }
+}
 
-პროექტის მენეჯმენტზე გავლენის ფაქტორები
-გავლენას ახდენს გუნდის გამოცდილება, მოთხოვნების სიცხადე, რისკები და ტექნოლოგია.
+class Program
+{
+    static void Main()
+    {
+        Manager m = new Manager(5000);
+        Developer d = new Developer(4000);
 
-უნივერსალური მართვის აქტივობები
-ესენია დაგეგმვა, მონიტორინგი, ანგარიშგება და რისკების კონტროლი.
+        Console.WriteLine("Manager Bonus: " + m.CalculateBonus());
+        Console.WriteLine("Developer Bonus: " + d.CalculateBonus());
+    }
+}
 
-რისკის მართვა
-რისკის მართვა გულისხმობს რისკების იდენტიფიკაციას, ანალიზს და შემცირების სტრატეგიებს.
+4.
 
-ხალხის მართვა და გუნდური მუშაობა
-ეფექტური კომუნიკაცია, მოტივაცია და როლების მკაფიო განაწილება კრიტიკულია წარმატებისთვის.
+using System;
 
-პროექტის დაგეგმვის საფუძვლები
-დაგეგმვა მოიცავს ამოცანების, რესურსების და დროის განსაზღვრას.
+interface ILogger
+{
+    void Log(string message);
+}
 
-პროგრამული უზრუნველყოფის ფასების დადგენა
-ფასი დამოკიდებულია შრომაზე, რისკზე, ბაზარზე და კლიენტის ღირებულებაზე.
+class ConsoleLogger : ILogger
+{
+    public void Log(string message)
+    {
+        Console.WriteLine(message);
+    }
+}
 
-გეგმაზე ორიენტირებული განვითარება
-ეს მიდგომა ეფუძნება დეტალურ წინასწარ დაგეგმვას და მკაცრ კონტროლს.
+class FileLogger : ILogger
+{
+    public void Log(string message)
+    {
+        Console.WriteLine("Writing to file: " + message);
+    }
+}
 
-პროექტის განრიგი და სწრაფი დაგეგმვა
-განრიგი აჩვენებს ამოცანების თანმიმდევრობას, სწრაფი დაგეგმვა კი გამოიყენება მოკლე ციკლებში Agile გარემოში.
+class Program
+{
+    static void Main()
+    {
+        ILogger logger1 = new ConsoleLogger();
+        ILogger logger2 = new FileLogger();
 
-შეფასების ტექნიკა
-შეფასების ტექნიკა გამოიყენება დროის, ღირებულებისა და ძალისხმევის პროგნოზირებისთვის. არსებობს ექსპერტული, ალგორითმული და ანალოგიური შეფასებები.
+        logger1.Log("Hello Console");
+        logger2.Log("Hello File");
+    }
+}
+
+5.
+
+using System;
+using System.Collections.Generic;
+
+class MyList<T> where T : IComparable<T>
+{
+    private List<T> items = new List<T>();
+
+    public void Add(T item)
+    {
+        items.Add(item);
+    }
+
+    public T Max()
+    {
+        if (items.Count == 0)
+            throw new InvalidOperationException("List is empty");
+
+        T max = items[0];
+
+        foreach (var item in items)
+        {
+            if (item.CompareTo(max) > 0)
+            {
+                max = item;
+            }
+        }
+
+        return max;
+    }
+}
+
+5.2
+
+using System;
+
+class Student : IComparable<Student>
+{
+    public string Name { get; set; }
+    public int Score { get; set; }
+
+    public Student(string name, int score)
+    {
+        Name = name;
+        Score = score;
+    }
+
+    public int CompareTo(Student other)
+    {
+        return this.Score.CompareTo(other.Score);
+    }
+
+    public override string ToString()
+    {
+        return Name + " - " + Score;
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        MyList<Student> students = new MyList<Student>();
+
+        students.Add(new Student("Ana", 85));
+        students.Add(new Student("Giorgi", 92));
+        students.Add(new Student("Nino", 78));
+
+        Student topStudent = students.Max();
+
+        Console.WriteLine("Top Student: " + topStudent);
+    }
+}
