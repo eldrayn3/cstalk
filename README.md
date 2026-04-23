@@ -72,3 +72,29 @@ plt.figure(figsize=(10, 8))
 sns.heatmap(corr_matrix, annot=True, fmt=".2f", linewidths=0.5)
 plt.title("Correlation Heatmap")
 plt.show()
+
+--------------------------------------------------
+
+import pandas as pd
+ship =pd.read_csv("https://raw.githubusercontent.com/datasciencedojo/datasets/refs/heads/master/titanic.csv")
+ship['Age'] =ship['Age'].fillna(ship['Age'].mean())
+ship['Sex']  =ship['Sex'].map({ "male":0,"female":1})
+ship['family']  =ship['Parch'] +ship['SibSp']
+ship.drop(['PassengerId','Name','Ticket','Cabin','Embarked','Parch','SibSp'],axis=1,inplace=True)
+
+ship.head()
+
+y =ship['Survived'].values
+X =ship.drop('Survived',axis=1).values
+from sklearn.model_selection import train_test_split
+X_train,X_test,y_train,y_test =train_test_split(X,y,test_size=0.2,random_state=1)
+from sklearn.tree import DecisionTreeClassifier
+model =DecisionTreeClassifier()
+model.fit(X_train,y_train)
+
+positive_probabilities =model.predict_proba(X_test)[:,1]
+from sklearn.metrics import roc_curve
+
+fpr,tpr,thresholds =roc_curve(y_test,positive_probabilities)
+import matplotlib.pyplot as plt
+plt.plot(fpr,tpr)
