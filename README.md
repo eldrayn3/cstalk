@@ -1,100 +1,267 @@
-import pandas as pd
-import numpy as np
-import statsmodels.api as sm
-import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error, r2_score
-from statsmodels.graphics.regressionplots import plot_partregress_grid
+WebApiSolution
+│
+├── Domain
+│   ├── Models
+│   │   ├── Product.cs
+│   │   └── Supplier.cs
+│
+├── Data
+│   └── AppDbContext.cs
+│
+├── Services
+│   └── InventoryService.cs
+│
+└── WebApiApp
+    ├── Controllers
+    │   └── InventoryController.cs
+    ├── Program.cs
+    └── appsettings.json
 
-df = pd.read_csv('Fuel_Cost.csv')
-df.head()
-#მონაცემების გამოსახვა ბიბლიოეთეკით
+Product.cs
 
-df.isnull().sum() #არასათანადო მონაცემების შემოწმება
-#ნაპოვნი არა გამოტოვებული მნიშვნელობები
+namespace Domain.Models;
 
-#ცხრილიდან ვიღებთ co2emisons
-X = df.drop(columns=["CO2EMISSIONS"])
-y = df["CO2EMISSIONS"]
-#ვაგებთ მოდელს
-X_const = sm.add_constant(X)
-model_full = sm.OLS(y, X_const).fit()
-model_full.summary()
+public class Product
+{
+    public int Id { get; set; }
 
-#Partial Regression Plots ვაგებთ
-fig = plt.figure(figsize=(12, 8))
-plot_partregress_grid(model_full, fig=fig)
-plt.tight_layout()
-plt.show()
+    public string Name { get; set; } = string.Empty;
 
-#ვარჩევთ მნიშვნელოვან ცვლადებს ამეებს ძლიერი გავლენა აქვთ
-selected_features = ["ENGINESIZE", "CYLINDERS", "FUELCONSUMPTION_COMB_MPG"]
-X_selected = df[selected_features]
+    public decimal Price { get; set; }
 
-#train test გაყოფა
-X_train, X_test, y_train, y_test = train_test_split(
-    X_selected, y, test_size=0.15, random_state=42
-)
+    public int Stock { get; set; }
 
-#საბოლოო მოდელის აგება
-X_train_const = sm.add_constant(X_train)
-X_test_const = sm.add_constant(X_test)
-model_final = sm.OLS(y_train, X_train_const).fit()
-model_final.summary
+    public int SupplierId { get; set; }
 
-#პროგნოზი
-y_pred = model_final.predict(X_test_const)
+    public Supplier? Supplier { get; set; }
+}
 
-#შეფასება
-rmse = np.sqrt(mean_squared_error(y_test, y_pred))
-r2 = r2_score(y_test, y_pred)
-print("\nModel Evaluation:")
-print(f"RMSE: {rmse:.2f}")
-print(f"R^2: {r2:.4f}")
-#21.58 prediction error გვიჩვენებს ამ მოდელის სიზუსტეზე ეს მოდელი კარგია და ხსნის კანონზომიერებას
+Supplier.cs
 
-#Actual vs Predicted model comparison
-plt.figure(figsize=(8, 6))
-plt.scatter(y_test, y_pred, alpha=0.6)
-min_val = min(y_test.min(), y_pred.min())
-max_val = max(y_test.max(), y_pred.max())
-plt.plot([min_val, max_val], [min_val, max_val], linestyle='--')
-plt.xlabel("Actual CO2")
-plt.ylabel("Predicted CO2")
-plt.title("Actual vs Predicted CO2")
-plt.grid()
-plt.show()
+namespace Domain.Models;
 
-import seaborn as sns
-import matplotlib.pyplot as plt
-corr_matrix = df.corr()
-plt.figure(figsize=(10, 8))
-sns.heatmap(corr_matrix, annot=True, fmt=".2f", linewidths=0.5)
-plt.title("Correlation Heatmap")
-plt.show()
+public class Supplier
+{
+    public int Id { get; set; }
 
---------------------------------------------------
+    public string Name { get; set; } = string.Empty;
 
-import pandas as pd
-ship =pd.read_csv("https://raw.githubusercontent.com/datasciencedojo/datasets/refs/heads/master/titanic.csv")
-ship['Age'] =ship['Age'].fillna(ship['Age'].mean())
-ship['Sex']  =ship['Sex'].map({ "male":0,"female":1})
-ship['family']  =ship['Parch'] +ship['SibSp']
-ship.drop(['PassengerId','Name','Ticket','Cabin','Embarked','Parch','SibSp'],axis=1,inplace=True)
+    public string Address { get; set; } = string.Empty;
 
-ship.head()
+    public ICollection<Product> Products { get; set; }
+        = new List<Product>();
+}
 
-y =ship['Survived'].values
-X =ship.drop('Survived',axis=1).values
-from sklearn.model_selection import train_test_split
-X_train,X_test,y_train,y_test =train_test_split(X,y,test_size=0.2,random_state=1)
-from sklearn.tree import DecisionTreeClassifier
-model =DecisionTreeClassifier()
-model.fit(X_train,y_train)
+***AppDbContext.cs
 
-positive_probabilities =model.predict_proba(X_test)[:,1]
-from sklearn.metrics import roc_curve
+using Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
-fpr,tpr,thresholds =roc_curve(y_test,positive_probabilities)
-import matplotlib.pyplot as plt
-plt.plot(fpr,tpr)
+namespace Data;
+
+public class AppDbContext : DbContext
+{
+    public AppDbContext(DbContextOptions<AppDbContext> options)
+        : base(options)
+    {
+    }
+
+    public DbSet<Product> Products { get; set; }
+
+    public DbSet<Supplier> Suppliers { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Supplier>().HasData(
+            new Supplier
+            {
+                Id = 1,
+                Name = "ABC Suppliers",
+                Address = "New York"
+            },
+            new Supplier
+            {
+                Id = 2,
+                Name = "Global Traders",
+                Address = "Chicago"
+            }
+        );
+
+        modelBuilder.Entity<Product>().HasData(
+            new Product
+            {
+                Id = 1,
+                Name = "Laptop",
+                Price = 1200,
+                Stock = 20,
+                SupplierId = 1
+            },
+            new Product
+            {
+                Id = 2,
+                Name = "Mouse",
+                Price = 30,
+                Stock = 100,
+                SupplierId = 2
+            }
+        );
+    }
+}
+
+***InventoryService.cs
+
+using Data;
+using Domain.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace Services;
+
+public class InventoryService
+{
+    private readonly AppDbContext _context;
+
+    public InventoryService(AppDbContext context)
+    {
+        _context = context;
+    }
+
+    public async Task<List<Product>> GetAllProductsAsync()
+    {
+        return await _context.Products
+            .Include(p => p.Supplier)
+            .ToListAsync();
+    }
+
+    public async Task<List<Product>> GetProductsAbovePriceAsync(decimal price)
+    {
+        return await _context.Products
+            .Include(p => p.Supplier)
+            .Where(p => p.Price > price)
+            .ToListAsync();
+    }
+
+    public async Task<Product> AddProductAsync(Product product)
+    {
+        _context.Products.Add(product);
+        await _context.SaveChangesAsync();
+        return product;
+    }
+
+    public async Task<bool> DeleteProductAsync(int id)
+    {
+        var product = await _context.Products.FindAsync(id);
+
+        if (product == null)
+            return false;
+
+        _context.Products.Remove(product);
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+}
+
+***Controllers/InventoryController.cs
+
+using Data;
+using Domain.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace Services
+{
+    public class InventoryService
+    {
+        private readonly AppDbContext _context;
+
+        public InventoryService(AppDbContext context)
+        {
+            _context = context;
+        }
+
+        // Get all products including their suppliers
+        public async Task<List<Product>> GetAllProductsAsync()
+        {
+            return await _context.Products
+                .Include(p => p.Supplier)
+                .ToListAsync();
+        }
+
+        // Get products whose price exceeds a threshold
+        public async Task<List<Product>> GetProductsAbovePriceAsync(decimal threshold)
+        {
+            return await _context.Products
+                .Include(p => p.Supplier)
+                .Where(p => p.Price > threshold)
+                .ToListAsync();
+        }
+
+        // Add a new product
+        public async Task<Product> AddProductAsync(Product product)
+        {
+            _context.Products.Add(product);
+            await _context.SaveChangesAsync();
+
+            return product;
+        }
+
+        // Delete a product by ID
+        public async Task<bool> DeleteProductAsync(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+
+            if (product == null)
+            {
+                return false;
+            }
+
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+    }
+}
+
+***Program.cs
+
+using Data;
+using Microsoft.EntityFrameworkCore;
+using Services;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseInMemoryDatabase("InventoryDb");
+});
+
+builder.Services.AddScoped<InventoryService>();
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context =
+        scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    context.Database.EnsureCreated();
+}
+
+app.Run();
