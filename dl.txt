@@ -1,0 +1,25 @@
+WebApiSolution
+│
+├── Domain
+│   └── Models
+│       ├── Product.cs
+│       └── Supplier.cs
+│
+├── Data
+│   └── AppDbContext.cs
+│
+├── Services
+│   └── InventoryService.cs
+│
+└── WebApiApp
+    ├── Controllers
+    │   └── InventoryController.cs
+    └── Program.cs
+
+Create a new project -> ASP.NET Core Web API -> Create
+Right-click the solution -> Add → New Project -> Class Library (.NET) -> Create
+Right-click Data -> Add → Project Reference -> Domain -> OK
+Right-click Services -> Add → Project Reference -> Domain -> OK
+Right-click WebApiApp -> Add → Project Reference -> Domain/Services/Data -> OK
+Right-click Data -> Manage NuGet Packages -> Browse -> Microsoft.EntityFrameworkCore
+Right-click WebApiApp -> Manage NuGet Packages -> Microsoft.EntityFrameworkCore -> Microsoft.EntityFrameworkCore.InMemory
