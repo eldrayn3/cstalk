@@ -1,51 +1,267 @@
-რისკის ტიპები 2 (2 ქულა)
-პროგრამული უზრუნველყოფის პროექტებში ერთ-ერთი ძირითადი რისკია ტექნიკური რისკი, რომელიც ჩნდება მაშინ, როცა არჩეული ტექნოლოგია ან არქიტექტურა არ ამართლებს მოლოდინებს, მაგალითად ახალი, დაუტესტავი ფრეიმვორკის გამოყენება, რაც იწვევს შესრულების პრობლემებს. ასეთი რისკის განეიტრალების გზა არის პროტოტიპის შექმნა და ტექნოლოგიის ადრეული ტესტირება.
-ორგანიზაციული რისკი დაკავშირებულია მენეჯმენტთან ან სტრუქტურასთან, მაგალითად როცა მოთხოვნები ხშირად იცვლება ბიზნესის მხრიდან. ამ რისკის შემცირება შესაძლებელია ცვლილებების მართვის ფორმალური პროცესის დანერგვით.
-ადამიანური რისკი უკავშირდება გუნდს, მაგალითად კრიტიკული დეველოპერის დატოვება პროექტის შუა ეტაპზე. გამოსავალია ცოდნის დოკუმენტირება და ცოდნის გაზიარება გუნდში.
+WebApiSolution
+│
+├── Domain
+│   ├── Models
+│   │   ├── Product.cs
+│   │   └── Supplier.cs
+│
+├── Data
+│   └── AppDbContext.cs
+│
+├── Services
+│   └── InventoryService.cs
+│
+└── WebApiApp
+    ├── Controllers
+    │   └── InventoryController.cs
+    ├── Program.cs
+    └── appsettings.json
 
-პროექტის მენეჯერები (2 ქულა)
-პროგრამული უზრუნველყოფა არამატერიალურია, რაც ნიშნავს, რომ მისი პროგრესი ფიზიკურად თვალსაჩინო არ არის, განსხვავებით სხვა საინჟინრო სფეროებისგან, როგორიცაა მშენებლობა. ამიტომ პროექტის მენეჯერები ვერ აკონტროლებენ პროგრესს ვიზუალური ნიშნებით და იყენებენ არაპირდაპირ ინდიკატორებს, როგორიცაა დასრულებული ფუნქციონალი, ტესტების შედეგები, milestone-ები და დოკუმენტაცია. ეს ზრდის არასწორი შეფასების რისკს და მოითხოვს უფრო ხშირ მონიტორინგსა და კომუნიკაციას.
+Product.cs
 
-Software aging (2 ქულა)
-პროგრამული უზრუნველყოფის დაძველება დროთა განმავლობაში იწვევს ტექნიკური ხარჯების ზრდას, რადგან სისტემა ხდება უფრო რთული გასაგები, ტექნოლოგიები მოძველებულია, დოკუმენტაცია არასრულია და ცვლილებების განხორციელება უფრო მეტ დროსა და რესურსს მოითხოვს. მცირე ცვლილებებიც კი შეიძლება გამოიწვიოს გაუთვალისწინებელი შეცდომები, რაც ზრდის მოვლის ღირებულებას.
+namespace Domain.Models;
 
-Emergency system repair (2 ქულა)
-გადაუდებელი შეკეთება სარისკოა, რადგან იგი ხშირად ხორციელდება დროის ზეწოლის ქვეშ, სათანადო ანალიზისა და ტესტირების გარეშე. ასეთ ცვლილებებს შეუძლია დააზიანოს სისტემის არქიტექტურა, გაზარდოს ტექნიკური ვალი და მომავალში გაართულოს შენარჩუნება, რაც უარყოფითად მოქმედებს გრძელვადიან ხარისხზე.
+public class Product
+{
+    public int Id { get; set; }
 
-რისკის ტიპები 1 (2 ქულა)
-პროექტის რისკი ეხება გრაფიკსა და რესურსებს, მაგალითად არასაკმარისი დროის შეფასება. მისი შემცირება შესაძლებელია რეალისტური დაგეგმვით.
-პროდუქტის რისკი დაკავშირებულია პროგრამის ხარისხთან, მაგალითად დაბალი შესრულება. გამოსავალია ადრეული ტესტირება და ხარისხის კონტროლი.
-ბიზნეს რისკი ეხება ორგანიზაციას, მაგალითად პროდუქტის ბაზარზე ჩავარდნა. მისი შემცირება შესაძლებელია ბაზრის ანალიზით და მომხმარებლის ჩართულობით.
+    public string Name { get; set; } = string.Empty;
 
-გუნდი, teamwork (2 ქულა)
-არაფორმალური ჯგუფის სტრუქტურა უფრო ეფექტურია მაშინ, როცა პროექტი მცირეა, ინოვაციური და მოითხოვს სწრაფ გადაწყვეტილებებს. ასეთ გარემოში კომუნიკაცია უფრო თავისუფალია, ბიუროკრატია ნაკლებია და გუნდი სწრაფად რეაგირებს ცვლილებებზე, რაც იერარქიულ სტრუქტურაში რთულია.
+    public decimal Price { get; set; }
 
-Legacy systems (2 ქულა)
-ძველი სისტემები ხშირად ინახება იმიტომ, რომ ისინი კრიტიკულია ბიზნესისთვის, მათი ჩანაცვლება სარისკო და ძვირია, ხოლო ახალი სისტემის დანერგვამ შეიძლება დროებით დააზიანოს ოპერაციები. ამიტომ ორგანიზაციები ირჩევენ მაღალ ტექნიკურ ხარჯებს დაბალი ბიზნეს რისკის სანაცვლოდ.
+    public int Stock { get; set; }
 
-ალფა და ბეტა ტესტირება (2 ქულა)
-ალფა ტესტირება ტარდება დეველოპერების ან შიდა ტესტირების გუნდის მიერ კონტროლირებად გარემოში და მიზნად ისახავს ძირითადი დეფექტების აღმოჩენას. ბეტა ტესტირება ტარდება რეალურ მომხმარებლებთან, რეალურ გარემოში, რათა შეფასდეს სისტემის ქცევა პრაქტიკაში და მომხმარებლის გამოცდილება.
+    public int SupplierId { get; set; }
 
-Validation, defect testing (2 ქულა)
-ვალიდაცია ამოწმებს, აკმაყოფილებს თუ არა სისტემა მომხმარებლის საჭიროებებს, ხოლო დეფექტების ტესტირება ფოკუსირებულია შეცდომების აღმოჩენაზე. ორივე მნიშვნელოვანია, რადგან სისტემა შეიძლება იყოს შეცდომებისგან თავისუფალი, მაგრამ მაინც არ აკმაყოფილებდეს მომხმარებლის მოთხოვნებს.
+    public Supplier? Supplier { get; set; }
+}
 
-User testing (2 ქულა)
-მომხმარებლის ტესტირება კრიტიკულია, რადგან რეალური მომხმარებლები ხშირად იყენებენ სისტემას არაპროგნოზირებადი გზებით. მათ შეუძლიათ გამოავლინონ გამოყენებადობის პრობლემები და ბიზნეს ლოგიკის ხარვეზები, რომლებიც ტექნიკური ტესტირებისას შეუმჩნეველი დარჩა.
+Supplier.cs
 
-Test-Driven Development (2 ქულა)
-TDD არის მიდგომა, სადაც ჯერ იწერება ტესტი და შემდეგ კოდი. მისი უპირატესობებია უკეთესი დიზაინი, შეცდომების ადრეული აღმოჩენა და მაღალი ტესტირებადობა, რაც ამცირებს რეგრესიის რისკს.
+namespace Domain.Models;
 
-Verification vs Validation (2 ქულა)
-ვერიფიკაცია ამოწმებს, სწორად არის თუ არა სისტემა აგებული სპეციფიკაციის მიხედვით, ხოლო ვალიდაცია ამოწმებს, სწორია თუ არა სისტემა მომხმარებლისთვის. განსხვავება მდგომარეობს „როგორ ვაშენებთ“ და „რას ვაშენებთ“ კითხვებში.
+public class Supplier
+{
+    public int Id { get; set; }
 
-Regression testing (2 ქულა)
-რეგრესიის ტესტირება გამოიყენება ცვლილებების შემდეგ, რათა დავრწმუნდეთ, რომ ახალი ცვლილებები არ აზიანებს უკვე არსებულ ფუნქციონალს. ის აუცილებელია სისტემის ევოლუციის დროს.
+    public string Name { get; set; } = string.Empty;
 
-Automated testing (2 ქულა)
-ავტომატური ტესტირება ზრდის სიჩქარეს და სიზუსტეს, განსაკუთრებით რეგრესიის ტესტირებაში, თუმცა მისი შექმნა ძვირია და არ არის ეფექტური ყველა ტიპის ტესტისთვის, მაგალითად გამოყენებადობისთვის.
+    public string Address { get; set; } = string.Empty;
 
-Open-Source Development
-ღია კოდის განვითარება ნიშნავს, რომ პროგრამის წყაროს კოდი ხელმისაწვდომია ყველასთვის. მისი უპირატესობებია დაბალი ღირებულება, გამჭვირვალობა, სწრაფი გაუმჯობესება და ფართო საზოგადოებრივი მხარდაჭერა.
+    public ICollection<Product> Products { get; set; }
+        = new List<Product>();
+}
 
-Software reuse, 4 levels of software reuse (2 ქულა)
-პროგრამული უზრუნველყოფის ხელახალი გამოყენება არის უკვე არსებული ელემენტების გამოყენება ახალი სისტემების შესაქმნელად. ხელახალი გამოყენების დონეებია: კოდის დონე, კომპონენტის დონე, სერვისის დონე და მთელი სისტემის დონე.
+***AppDbContext.cs
+
+using Domain.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace Data;
+
+public class AppDbContext : DbContext
+{
+    public AppDbContext(DbContextOptions<AppDbContext> options)
+        : base(options)
+    {
+    }
+
+    public DbSet<Product> Products { get; set; }
+
+    public DbSet<Supplier> Suppliers { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Supplier>().HasData(
+            new Supplier
+            {
+                Id = 1,
+                Name = "ABC Suppliers",
+                Address = "New York"
+            },
+            new Supplier
+            {
+                Id = 2,
+                Name = "Global Traders",
+                Address = "Chicago"
+            }
+        );
+
+        modelBuilder.Entity<Product>().HasData(
+            new Product
+            {
+                Id = 1,
+                Name = "Laptop",
+                Price = 1200,
+                Stock = 20,
+                SupplierId = 1
+            },
+            new Product
+            {
+                Id = 2,
+                Name = "Mouse",
+                Price = 30,
+                Stock = 100,
+                SupplierId = 2
+            }
+        );
+    }
+}
+
+***InventoryService.cs
+
+using Data;
+using Domain.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace Services;
+
+public class InventoryService
+{
+    private readonly AppDbContext _context;
+
+    public InventoryService(AppDbContext context)
+    {
+        _context = context;
+    }
+
+    public async Task<List<Product>> GetAllProductsAsync()
+    {
+        return await _context.Products
+            .Include(p => p.Supplier)
+            .ToListAsync();
+    }
+
+    public async Task<List<Product>> GetProductsAbovePriceAsync(decimal price)
+    {
+        return await _context.Products
+            .Include(p => p.Supplier)
+            .Where(p => p.Price > price)
+            .ToListAsync();
+    }
+
+    public async Task<Product> AddProductAsync(Product product)
+    {
+        _context.Products.Add(product);
+        await _context.SaveChangesAsync();
+        return product;
+    }
+
+    public async Task<bool> DeleteProductAsync(int id)
+    {
+        var product = await _context.Products.FindAsync(id);
+
+        if (product == null)
+            return false;
+
+        _context.Products.Remove(product);
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+}
+
+***Controllers/InventoryController.cs
+
+using Data;
+using Domain.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace Services
+{
+    public class InventoryService
+    {
+        private readonly AppDbContext _context;
+
+        public InventoryService(AppDbContext context)
+        {
+            _context = context;
+        }
+
+        // Get all products including their suppliers
+        public async Task<List<Product>> GetAllProductsAsync()
+        {
+            return await _context.Products
+                .Include(p => p.Supplier)
+                .ToListAsync();
+        }
+
+        // Get products whose price exceeds a threshold
+        public async Task<List<Product>> GetProductsAbovePriceAsync(decimal threshold)
+        {
+            return await _context.Products
+                .Include(p => p.Supplier)
+                .Where(p => p.Price > threshold)
+                .ToListAsync();
+        }
+
+        // Add a new product
+        public async Task<Product> AddProductAsync(Product product)
+        {
+            _context.Products.Add(product);
+            await _context.SaveChangesAsync();
+
+            return product;
+        }
+
+        // Delete a product by ID
+        public async Task<bool> DeleteProductAsync(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+
+            if (product == null)
+            {
+                return false;
+            }
+
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+    }
+}
+
+***Program.cs
+
+using Data;
+using Microsoft.EntityFrameworkCore;
+using Services;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseInMemoryDatabase("InventoryDb");
+});
+
+builder.Services.AddScoped<InventoryService>();
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context =
+        scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    context.Database.EnsureCreated();
+}
+
+app.Run();
